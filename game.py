@@ -1,11 +1,20 @@
 
 from player import player
 import deck as d
+import random
 
-def bets(players):
+GAME_TRICKS = 13
+
+def bets(players, first_player):
+    betTable = {}
+    for i in range(4):
+        print("Player ", i +1, " place your bet");
+        players[(first_player + i) % 4].setBet(input())
     for player in players:
-        print('Place your bet (0 to 13):')
-        player.setBet(input())
+        betTable["player.name"] = player.getBet()
+    return betTable
+
+
 
 
 def dealNshuffle(deck, players):
@@ -29,16 +38,38 @@ def createPlayers():
 
     return (p1, p2, p3, p4)
 
+def firstDealer():
+    return random.randint(0, 3)
+
+def nextDealer(previous_dealer):
+    return (previous_dealer + 1) % 4
+
+def calculateFirstPlayer(dealer):
+    return (dealer - 3) % 4
+
+def trick(first_player):
+
+    for i in range(3):
+
+
+
+
 def game():
 
     players = createPlayers()
     scoreTable = {players[0].name + ' & ' + players[2].name : [0,0], players[1].name + ' & ' + players[3].name : [0,0]}
     deck = d.create()
+    dealer = firstDealer()
+    first_player = calculateFirstPlayer(dealer)
 
     #Game routine
-    while 1:
-
+    while True:
         dealNshuffle(deck, players)
-        bets(players)
+        betTable = bets(players, first_player)
+        for i in range(GAME_TRICKS):
+            for player in players:
 
+
+
+        dealer = nextDealer(dealer)
 game()

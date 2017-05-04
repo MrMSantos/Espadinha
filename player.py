@@ -1,3 +1,4 @@
+import deck
 class player:
 
     def __init__(self, name):
@@ -10,13 +11,16 @@ class player:
         self.hand = hand
 
     def setBet(self, bet):
-        self.bet = bet
+        self.bet = int(bet)
 
     def getHand(self):
         return self.hand
 
     def getBet(self):
         return self.bet
+
+    def getName(self):
+        return self.name
 
     def reset(self):
         self.hand = []
@@ -28,3 +32,6 @@ class player:
 
     def playCard(self, card):
         self.hand.remove(card)
+
+    def canPlay(self, isFirstTrick, isFirst, suit = None):
+        print(deck.suits)
