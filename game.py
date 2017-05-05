@@ -1,6 +1,7 @@
 
 from player import player
-import deck as d
+from deck import Deck
+from table import Table
 import random
 
 GAME_TRICKS = 13
@@ -18,8 +19,8 @@ def bets(players, first_player):
 
 
 def dealNshuffle(deck, players):
-    d.shuffle(deck)
-    h1, h2, h3, h4 = d.deal(deck)
+    deck.shuffle()
+    h1, h2, h3, h4 = deck.deal()
     players[0].setHand(h1)
     players[1].setHand(h2)
     players[2].setHand(h3)
@@ -48,9 +49,27 @@ def calculateFirstPlayer(dealer):
     return (dealer - 3) % 4
 
 
-def playHuman(player):
+def playHuman(player, table):
+    print("Your Cards : ")
+    i = 1
+    #getting them possibilities
     for card in player.getHand():
-        print()
+        print(i, " - ", card.toString(), " ")
+        i+=1
+    print("\n")
+    print("Select a card (number) to play\n")
+    c_index = int(input())
+    while (not (0 < c_index and c_index <= len(player.getHand()))):
+        c_index = int(input())
+    real_index = c_index - 1
+    table.layDownCard(player, player.getHand()[real_index])
+    player.playCard(player.getHand()[real_index])
+
+
+
+
+
+
 
 
 def playAi():
@@ -73,8 +92,10 @@ def game():
         betTable = bets(players, first_player)
         for i in range(GAME_TRICKS):
             for player in players:
-                play()
-        table.checkWinner()
+                playHuman(player, table)
+            print(table.checkWinner().getName()," was the winner!")
+            print(table.toString())
+            table.reset()
 
 
         dealer = nextDealer(dealer)

@@ -11,7 +11,7 @@ class Deck:
     HEARTS = '♥'
     DIAMONDS = '♦'
 
-    suits = [S, C, H, D]
+    suits = [SPADES, CLUBS, HEARTS, DIAMONDS]
     deck = []
 
     def __init__(self):
@@ -19,8 +19,8 @@ class Deck:
             for value in self.values:
                 self.deck += [card(self.values[value], suit, value)]
 
-    def shuffle(self, deck):
-        random.shuffle(deck)
+    def shuffle(self):
+        random.shuffle(self.deck)
 
-    def deal(self, deck):
-        return deck[0:13], deck[13:26], deck[26:39], deck[39:52]
+    def deal(self):
+        return self.deck[0:13], self.deck[13:26], self.deck[26:39], self.deck[39:52]

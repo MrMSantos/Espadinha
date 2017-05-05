@@ -1,16 +1,22 @@
-from deck import deck
+from deck import Deck
+from card import card
 
+def getPlayer(play):
+    return play[0]
+
+def getCard(play):
+    return play[1]
 class Table:
 
     def __init__(self):
         self.plays = []
 
     def layDownCard(self, player, card):
-        plays += [(player, card)]
+        self.plays += [(player, card)]
 
     def checkWinner(self):
 
-        first_play = plays[0]
+        first_play = self.plays[0]
         first_player = getPlayer(first_play)
         first_card = getCard(first_play)
         first_suit = first_card.getSuit()
@@ -18,23 +24,29 @@ class Table:
         winning_card = first_card
         winning_player = first_player
 
-        for play in plays[1:]:
+        for play in self.plays[1:]:
             played_card = getCard(play)
             played_card_suit = played_card.getSuit()
 
-            if (played_card_suit == first_suit):
-                if (played_card.getSuit()) > deck.getValue(winning_card)
+            if (played_card_suit == winning_card.getSuit()):
+                if (played_card.getValue() > winning_card.getValue()):
                     winning_card = played_card
                     winning_player = getPlayer(play)
 
-            elif(played_card_suit = deck.SPADES):
-                winning_card = player_card
-                winning_player = player
+            elif(played_card_suit == Deck.SPADES):
+                winning_card = played_card
+                winning_player = getPlayer(play)
 
         return winning_player
 
-    def getPlayer(play):
-        return play[0]
+    def reset(self):
+        self.plays = []
 
-    def getCard(play):
-        return play[1]
+    def toString(self):
+        tablestr = ""
+        for play in self.plays:
+            tablestr = tablestr + "Player:"
+            tablestr = tablestr + getPlayer(play).getName() + " "
+            tablestr = tablestr + "Card:"
+            tablestr = tablestr + getCard(play).toString() + "//"
+        return tablestr
