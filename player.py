@@ -1,4 +1,5 @@
-import deck
+from deck import deck
+
 class player:
 
     def __init__(self, name):
@@ -35,3 +36,21 @@ class player:
 
     def canPlay(self, isFirstTrick, isFirst, suit = None):
         print(deck.suits)
+
+    def eligablePlay(self, isTrumped, suit = None):
+        eligableCards = []
+        if suit == None:
+            if isTrumped:
+                return self.hand
+            else:
+                for card in self.hand:
+                    if card.suit != deck.SPADES:
+                        eligableCards.append(card)
+                return eligableCards
+        else:
+            for card in self.hand:
+                if card.suit == suit:
+                    eligableCards.append(card)
+            if len(eligableCards) == 0:
+                return self.hand
+            return eligableCards
