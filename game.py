@@ -47,10 +47,14 @@ def nextDealer(previous_dealer):
 def calculateFirstPlayer(dealer):
     return (dealer - 3) % 4
 
-def trick(first_player):
 
-    for i in range(3):
+def playHuman(player):
+    for card in player.getHand():
+        print()
 
+
+def playAi():
+    1
 
 
 
@@ -58,7 +62,8 @@ def game():
 
     players = createPlayers()
     scoreTable = {players[0].name + ' & ' + players[2].name : [0,0], players[1].name + ' & ' + players[3].name : [0,0]}
-    deck = d.create()
+    deck = Deck()
+    table = Table()
     dealer = firstDealer()
     first_player = calculateFirstPlayer(dealer)
 
@@ -68,7 +73,8 @@ def game():
         betTable = bets(players, first_player)
         for i in range(GAME_TRICKS):
             for player in players:
-
+                play()
+        table.checkWinner()
 
 
         dealer = nextDealer(dealer)

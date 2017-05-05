@@ -1,21 +1,40 @@
-import deck
+from deck import deck
 
 class Table:
 
     def __init__(self):
-        self.cards = {}
-        self.player_order = []
+        self.plays = []
 
     def layDownCard(self, player, card):
-        cards[player.getName()] = card
-        player_order + [player.getName()]
+        plays += [(player, card)]
 
     def checkWinner(self):
-        first_player = order[0].getName(())
-        first_card = cards[first_player]
-        first_suit = deck.getSuit(first_card)
+
+        first_play = plays[0]
+        first_player = getPlayer(first_play)
+        first_card = getCard(first_play)
+        first_suit = first_card.getSuit()
 
         winning_card = first_card
-        for player in player_order[1:]:
-            played_card = cards[player.getName()]
-            #FIXME TODO TODO
+        winning_player = first_player
+
+        for play in plays[1:]:
+            played_card = getCard(play)
+            played_card_suit = played_card.getSuit()
+
+            if (played_card_suit == first_suit):
+                if (played_card.getSuit()) > deck.getValue(winning_card)
+                    winning_card = played_card
+                    winning_player = getPlayer(play)
+
+            elif(played_card_suit = deck.SPADES):
+                winning_card = player_card
+                winning_player = player
+
+        return winning_player
+
+    def getPlayer(play):
+        return play[0]
+
+    def getCard(play):
+        return play[1]
