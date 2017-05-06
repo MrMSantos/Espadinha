@@ -1,11 +1,12 @@
 from deck import Deck
-from card import card
+from card import Card
 
 def getPlayer(play):
     return play[0]
 
 def getCard(play):
     return play[1]
+    
 class Table:
 
     def __init__(self):
@@ -33,7 +34,7 @@ class Table:
                     winning_card = played_card
                     winning_player = getPlayer(play)
 
-            elif(played_card_suit == Deck.SPADES):
+            elif(played_card_suit == Card.SPADES):
                 winning_card = played_card
                 winning_player = getPlayer(play)
 

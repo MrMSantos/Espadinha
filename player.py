@@ -1,6 +1,6 @@
-from deck import deck
+from deck import Deck
 
-class player:
+class Player:
 
     def __init__(self, name):
         self.name = name
@@ -44,7 +44,7 @@ class player:
                 return self.hand
             else:
                 for card in self.hand:
-                    if card.suit != deck.SPADES:
+                    if card.suit != Card.SPADES:
                         eligableCards.append(card)
                 return eligableCards
         else:

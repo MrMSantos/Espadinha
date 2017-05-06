@@ -1,5 +1,5 @@
 
-from player import player
+from player import Player
 from deck import Deck
 from table import Table
 import random
@@ -29,13 +29,13 @@ def dealNshuffle(deck, players):
 
 def createPlayers():
     print('Insert name: ')
-    p1 = player(input())
+    p1 = Player(input())
     print('Insert name: ')
-    p2 = player(input())
+    p2 = Player(input())
     print('Insert name: ')
-    p3 = player(input())
+    p3 = Player(input())
     print('Insert name: ')
-    p4 = player(input())
+    p4 = Player(input())
 
     return (p1, p2, p3, p4)
 
