@@ -9,14 +9,11 @@ GAME_TRICKS = 13
 def bets(players, first_player):
     betTable = {}
     for i in range(4):
-        print("Player ", i +1, " place your bet");
+        print("Player", i + 1, "place your bet (0 to 13)");
         players[(first_player + i) % 4].setBet(input())
     for player in players:
         betTable["player.name"] = player.getBet()
     return betTable
-
-
-
 
 def dealNshuffle(deck, players):
     deck.shuffle()
@@ -36,7 +33,6 @@ def createPlayers():
     p3 = Player(input())
     print('Insert name: ')
     p4 = Player(input())
-
     return (p1, p2, p3, p4)
 
 def firstDealer():
@@ -56,8 +52,7 @@ def playHuman(player, table):
     for card in player.getHand():
         print(i, " - ", card.toString(), " ")
         i+=1
-    print("\n")
-    print("Select a card (number) to play\n")
+    print("Select a card (number) to play")
     c_index = int(input())
     while (not (0 < c_index and c_index <= len(player.getHand()))):
         c_index = int(input())
@@ -65,17 +60,8 @@ def playHuman(player, table):
     table.layDownCard(player, player.getHand()[real_index])
     player.playCard(player.getHand()[real_index])
 
-
-
-
-
-
-
-
 def playAi():
     1
-
-
 
 def game():
 
@@ -97,6 +83,6 @@ def game():
             print(table.toString())
             table.reset()
 
-
         dealer = nextDealer(dealer)
+
 game()

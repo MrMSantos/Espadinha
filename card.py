@@ -25,11 +25,9 @@ class Card:
 	#	return self.rep + ' ' + self.suit
 
 	def toString(self):
-		print("|-------|")
-		print("| %s     |" % self.rep)
-		print("|       |")
-		print("|   %s   |" % self.suit)
-		print("|       |")
-		print("|    %s  |" % self.rep)
-		print("|-------|")
+		print("|-----|")
+		print("|%s    |" % self.rep)
+		print("|  %s  |" % self.suit)
+		print("|    %s|" % self.rep)
+		print("|-----|")
 		return self.rep + ' ' + self.suit
