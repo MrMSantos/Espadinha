@@ -1,3 +1,4 @@
+from card import Card
 from deck import Deck
 
 class Player:
@@ -54,3 +55,27 @@ class Player:
             if len(eligableCards) == 0:
                 return self.hand
             return eligableCards
+
+    def printHand(self):
+        i = 1
+        for card in self.hand:
+            print(i, '-', card.toString(), end = ' | ')
+            i += 1
+        print()
+
+    def orderHand(self):
+        hand = []
+        switch = True
+        #order by suit
+        for suit in Card.suits:
+            for card in self.hand:
+                if card.suit == suit:
+                    hand.append(card)
+        #order by value
+        while switch:
+            switch = False
+            for i in range(len(hand) - 1):
+                if hand[i].value < hand[i + 1].value and hand[i].suit == hand[i + 1].suit:
+                    hand[i], hand[i + 1] = hand[i + 1], hand[i]
+                    switch = True
+        self.hand = hand

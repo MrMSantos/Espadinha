@@ -46,8 +46,8 @@ class Table:
     def toString(self):
         tablestr = ""
         for play in self.plays:
-            tablestr = tablestr + "Player:"
+            tablestr = tablestr + "Player: "
             tablestr = tablestr + getPlayer(play).getName() + " "
-            tablestr = tablestr + "Card:"
-            tablestr = tablestr + getCard(play).toString() + "//"
+            tablestr = tablestr + "Card: "
+            tablestr = tablestr + getCard(play).toString() + "// "
         return tablestr

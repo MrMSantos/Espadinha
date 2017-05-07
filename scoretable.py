@@ -1,5 +1,7 @@
 from player import Player
 
+MAX_BAGS = 10
+
 class ScoreTable:
 
     def __init__(self, team):
@@ -10,9 +12,9 @@ class ScoreTable:
         self.score = 0
 
     def updateScoreTable(self, p1, p2):
-        checkNill(p1)
-        checkNill(p2)
-        self.totalBid = p1.bid + p2.bid
+        self.checkNill(p1)
+        self.checkNill(p2)
+        self.totalBid = p1.bet + p2.bet
         self.totalTricks = p1.trick + p2.trick
         if self.totalTricks < self.totalBid:
             self.score -= self.totalBid * 10
@@ -20,7 +22,7 @@ class ScoreTable:
             self.score += self.totalBid * 10
         elif self.totalTricks > self.totalBid:
             newBags = self.totalTricks - self.totalBid
-            if self.bags + newBags > 10:
+            if self.bags + newBags > MAX_BAGS:
                 self.score -= 100
                 self.bags = 0
             else:
@@ -28,7 +30,7 @@ class ScoreTable:
                 self.bags += newBags
 
     def checkNill(self, p):
-        if p.bid == 0:
+        if p.bet == 0:
             if p.trick == 0:
                 self.score += 100
             elif p.trick > 0:
