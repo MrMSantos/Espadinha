@@ -96,7 +96,6 @@ def game():
         bets(players, first_player)
         for i in range(GAME_TRICKS):
             trick(players, first_player, table)
-            print(table.checkWinner().getName(), "wins the trick")
             print(table.toString())
 
             player_win = table.checkWinner()

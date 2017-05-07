@@ -47,7 +47,10 @@ class Player:
                 for card in self.hand:
                     if card.suit != Card.SPADES:
                         eligableCards.append(card)
-                return eligableCards
+                if len(eligableCards) > 0:
+                    return eligableCards
+                else:
+                    return self.hand
         else:
             for card in self.hand:
                 if card.suit == suit:
