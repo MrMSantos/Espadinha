@@ -21,6 +21,9 @@ class Card:
 	def getSuit(self):
 		return self.suit
 
+	def isSpades(self):
+		return self.suit == self.SPADES
+
 	def toString(self):
 		return self.rep + '' + self.suit
 

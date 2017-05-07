@@ -35,8 +35,8 @@ class Player:
     def playCard(self, card):
         self.hand.remove(card)
 
-    def canPlay(self, isFirstTrick, isFirst, suit = None):
-        print(deck.suits)
+    #def canPlay(self, isFirstTrick, isFirst, suit = None):
+    #    print(deck.suits)
 
     def eligablePlay(self, isTrumped, suit = None):
         eligableCards = []

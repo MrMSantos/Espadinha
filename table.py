@@ -11,6 +11,7 @@ class Table:
 
     def __init__(self):
         self.plays = []
+        self.isTrumped = False
 
     def layDownCard(self, player, card):
         self.plays += [(player, card)]
@@ -38,10 +39,15 @@ class Table:
                 winning_card = played_card
                 winning_player = getPlayer(play)
 
+        winning_player.trick += 1
         return winning_player
+
+    def resetCards(self):
+        self.plays = []
 
     def reset(self):
         self.plays = []
+        self.isTrumped = False
 
     def toString(self):
         tablestr = ""

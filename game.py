@@ -1,20 +1,23 @@
-
-from player import Player
+from card import Card
 from deck import Deck
+from player import Player
 from table import Table
 from scoretable import ScoreTable
 import random
 
 GAME_TRICKS = 13
+WINNING_SCORE = 500
+PLAYERS_NUMBER = 4
 
 def bets(players, first_player):
-    betTable = {}
-    for i in range(4):
-        print("Player", i + 1, "place your bet (0 to 13)");
+    for i in range(PLAYERS_NUMBER):
+        print(players[(first_player + i) % 4].printHand())
+        print("Player", players[(first_player + i) % 4].name, "place your bet (0 to 13)");
         players[(first_player + i) % 4].setBet(input())
-    for player in players:
-        betTable["player.name"] = player.getBet()
-    return betTable
+
+def trick(players, first_player, table):
+    for i in range(PLAYERS_NUMBER):
+        playHuman(players[(first_player + i) % 4], table)
 
 def dealNshuffle(deck, players):
     deck.shuffle()
@@ -27,7 +30,6 @@ def dealNshuffle(deck, players):
     players[2].orderHand()
     players[3].setHand(h4)
     players[3].orderHand()
-
 
 def createPlayers():
     print('Insert name player 1: ')
@@ -49,20 +51,29 @@ def nextDealer(previous_dealer):
 def calculateFirstPlayer(dealer):
     return (dealer - 3) % 4
 
-
 def playHuman(player, table):
-    #Show all hand
+    #Show players hand
     print("Your Cards", player.name, ": ")
     player.printHand()
-    playableCards = player.eligablePlay(player, )
 
+    #Show possible plays
+    if len(table.plays) == 0:
+        playableCards = player.eligablePlay(table.isTrumped)
+    elif len(table.plays) > 0:
+        playableCards = player.eligablePlay(table.isTrumped, table.plays[0][1].suit)
 
+    #Select a playable card
     print("Select a card (number) to play: ")
     c_index = int(input())
-    while not (0 < c_index and c_index <= len(player.getHand())):
+    while (not (0 < c_index and c_index <= len(player.getHand()))) or player.hand[c_index - 1] not in playableCards:
+        print("Please choose a playable card: ")
         c_index = int(input())
     real_index = c_index - 1
-    
+
+    #Check for Spades
+    if player.hand[real_index].isSpades():
+        table.isTrumped = True
+    #Update table and player
     table.layDownCard(player, player.getHand()[real_index])
     player.playCard(player.getHand()[real_index])
 
@@ -75,23 +86,30 @@ def game():
     deck = Deck()
     table = Table()
     dealer = firstDealer()
-    first_player = calculateFirstPlayer(dealer)
-    teamA = ScoreTable(players[0].name + ' & ' + players[2].name)
-    teamB = ScoreTable(players[1].name + ' & ' + players[3].name)
+    teamA = ScoreTable((players[0], players[2]))
+    teamB = ScoreTable((players[1], players[3]))
 
     #Game routine
-    while True:
+    while teamA.score < WINNING_SCORE or teamB.score < WINNING_SCORE:
+        first_player = calculateFirstPlayer(dealer)
         dealNshuffle(deck, players)
-        betTable = bets(players, first_player)
+        bets(players, first_player)
         for i in range(GAME_TRICKS):
-            for player in players:
-                playHuman(player, table)
-
-            teamA.updateScoreTable(players[0], players[2])
-            teamB.updateScoreTable(players[1], players[3])
-            print(table.checkWinner().getName(),"gets the trick")
+            trick(players, first_player, table)
+            print(table.checkWinner().getName(), "wins the trick")
             print(table.toString())
-            table.reset()
+
+            player_win = table.checkWinner()
+            first_player = players.index(player_win)
+            table.resetCards()
+        table.reset()
+
+        teamA.updateScoreTable()
+        teamB.updateScoreTable()
         dealer = nextDealer(dealer)
+
+        teamA.toString()
+        print()
+        teamB.toString()
 
 game()

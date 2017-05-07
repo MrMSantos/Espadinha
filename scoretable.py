@@ -11,9 +11,9 @@ class ScoreTable:
         self.bags = 0
         self.score = 0
 
-    def updateScoreTable(self, p1, p2):
-        self.checkNill(p1)
-        self.checkNill(p2)
+    def updateScoreTable(self):
+        p1, p2 = self.team[0], self.team[1]
+        self.checkNill()
         self.totalBid = p1.bet + p2.bet
         self.totalTricks = p1.trick + p2.trick
         if self.totalTricks < self.totalBid:
@@ -22,16 +22,26 @@ class ScoreTable:
             self.score += self.totalBid * 10
         elif self.totalTricks > self.totalBid:
             newBags = self.totalTricks - self.totalBid
-            if self.bags + newBags > MAX_BAGS:
+            if self.bags + newBags >= MAX_BAGS:
                 self.score -= 100
                 self.bags = 0
             else:
                 self.score += self.totalBid * 10 + newBags
                 self.bags += newBags
 
-    def checkNill(self, p):
-        if p.bet == 0:
-            if p.trick == 0:
-                self.score += 100
-            elif p.trick > 0:
-                self.score -= 100
+    def checkNill(self):
+        for p in self.team:
+            if p.bet == 0:
+                if p.trick == 0:
+                    self.score += 100
+                elif p.trick > 0:
+                    self.score -= 100
+
+    def toString(self):
+        print("--------------------")
+        print(self.team[0].name + " & " + self.team[1].name)
+        print("Total Bid:", self.totalBid)
+        print("Total Tricks:", self.totalTricks)
+        print("Bags:", self.bags)
+        print("Score:", self.score)
+        print("--------------------")
