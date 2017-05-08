@@ -15,12 +15,6 @@ class Card:
 		self.suit = suit
 		self.rep = rep
 
-	def getValue(self):
-		return self.value
-
-	def getSuit(self):
-		return self.suit
-
 	def isSpades(self):
 		return self.suit == self.SPADES
 

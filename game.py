@@ -10,10 +10,15 @@ WINNING_SCORE = 500
 PLAYERS_NUMBER = 4
 
 def bets(players, first_player):
+    print("--- BIDDING ---")
     for i in range(PLAYERS_NUMBER):
         print(players[(first_player + i) % 4].printHand())
-        print("Player", players[(first_player + i) % 4].name, "place your bet (0 to 13)");
-        players[(first_player + i) % 4].setBet(input())
+        print(players[(first_player + i) % 4].name, "place your bet (0 to 13)");
+        bet = int(input())
+        while bet < 0 or bet > 13:
+            print("Please make a legit bet")
+            bet = int(input())
+        players[(first_player + i) % 4].bet = bet
 
 def trick(players, first_player, table):
     for i in range(PLAYERS_NUMBER):
@@ -22,24 +27,29 @@ def trick(players, first_player, table):
 def dealNshuffle(deck, players):
     deck.shuffle()
     h1, h2, h3, h4 = deck.deal()
-    players[0].setHand(h1)
+    players[0].hand = h1
     players[0].orderHand()
-    players[1].setHand(h2)
+    players[1].hand = h2
     players[1].orderHand()
-    players[2].setHand(h3)
+    players[2].hand = h3
     players[2].orderHand()
-    players[3].setHand(h4)
+    players[3].hand = h4
     players[3].orderHand()
 
 def createPlayers():
-    print('Insert name player 1: ')
+    print("--- Welcome to Espadinha! ---")
+    print()
+    print("Team A please enter your names!")
+    print('Player 1, insert your name: ')
     p1 = Player(input())
-    print('Insert name player 2: ')
-    p2 = Player(input())
-    print('Insert name player 3: ')
+    print('Player 3, insert your name: ')
     p3 = Player(input())
-    print('Insert name player 4: ')
+    print("Team B please enter your names!")
+    print('Player 2, insert your name: ')
+    p2 = Player(input())
+    print('Player 4, insert your name: ')
     p4 = Player(input())
+    print()
     return (p1, p2, p3, p4)
 
 def firstDealer():
@@ -53,8 +63,8 @@ def calculateFirstPlayer(dealer):
 
 def playHuman(player, table):
     #Show players hand
-    print("Your Cards", player.name, ": ")
-    player.printHand()
+    print(player.name, str(player.trick) + "/" + str(player.bet))
+    print(player.printHand())
 
     #Show possible plays
     if len(table.plays) == 0:
@@ -63,9 +73,9 @@ def playHuman(player, table):
         playableCards = player.eligablePlay(table.isTrumped, table.plays[0][1].suit)
 
     #Select a playable card
-    print("Select a card (number) to play: ")
+    print(player.name, "select a card (number) to play: ")
     c_index = int(input())
-    while (not (0 < c_index and c_index <= len(player.getHand()))) or player.hand[c_index - 1] not in playableCards:
+    while (not (0 < c_index and c_index <= len(player.hand))) or player.hand[c_index - 1] not in playableCards:
         print("Please choose a playable card: ")
         c_index = int(input())
     real_index = c_index - 1
@@ -74,8 +84,8 @@ def playHuman(player, table):
     if player.hand[real_index].isSpades():
         table.isTrumped = True
     #Update table and player
-    table.layDownCard(player, player.getHand()[real_index])
-    player.playCard(player.getHand()[real_index])
+    table.layDownCard(player, player.hand[real_index])
+    player.playCard(player.hand[real_index])
 
 def playAi():
     1

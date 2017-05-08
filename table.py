@@ -21,17 +21,17 @@ class Table:
         first_play = self.plays[0]
         first_player = getPlayer(first_play)
         first_card = getCard(first_play)
-        first_suit = first_card.getSuit()
+        first_suit = first_card.suit
 
         winning_card = first_card
         winning_player = first_player
 
         for play in self.plays[1:]:
             played_card = getCard(play)
-            played_card_suit = played_card.getSuit()
+            played_card_suit = played_card.suit
 
-            if (played_card_suit == winning_card.getSuit()):
-                if (played_card.getValue() > winning_card.getValue()):
+            if (played_card_suit == winning_card.suit):
+                if (played_card.value > winning_card.value):
                     winning_card = played_card
                     winning_player = getPlayer(play)
 
@@ -52,8 +52,7 @@ class Table:
     def toString(self):
         tablestr = ""
         for play in self.plays:
-            tablestr = tablestr + "Player: "
-            tablestr = tablestr + getPlayer(play).getName() + " "
+            tablestr = tablestr + getPlayer(play).name + " "
             tablestr = tablestr + "Card: "
-            tablestr = tablestr + getCard(play).toString() + "// "
+            tablestr = tablestr + getCard(play).toString() + " // "
         return tablestr
