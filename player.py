@@ -14,9 +14,6 @@ class Player:
         self.bet = 0
         self.trick = 0
 
-    #def incTrick(self):
-    #    self.trick += 1
-
     def playCard(self, card):
         self.hand.remove(card)
 
@@ -40,6 +37,9 @@ class Player:
             if len(eligableCards) == 0:
                 return self.hand
             return eligableCards
+
+    def printTricks(self):
+        return self.name + ' ' + str(self.trick) + '/' + str(self.bet) + ' tricks'
 
     def printHand(self):
         hand = ''

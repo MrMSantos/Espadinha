@@ -5,9 +5,10 @@ class RandomPlayer(Player):
 
     def play(self, table):
         #Show players hand
-        print(self.name, str(self.trick) + "/" + str(self.bet))
         print(self.printHand())
-
+        print(self.printTricks())
+        print()
+        
         #Show possible plays
         if len(table.plays) == 0:
             playableCards = self.eligablePlay(table.isTrumped)
