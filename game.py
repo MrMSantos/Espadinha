@@ -1,6 +1,8 @@
 from card import Card
 from deck import Deck
 from player import Player
+from human_player import HumanPlayer
+from random_player import RandomPlayer
 from table import Table
 from scoretable import ScoreTable
 import random
@@ -22,7 +24,8 @@ def bets(players, first_player):
 
 def trick(players, first_player, table):
     for i in range(PLAYERS_NUMBER):
-        playHuman(players[(first_player + i) % 4], table)
+        players[(first_player + i) % 4].play(table)
+        print(table.toString())
 
 def dealNshuffle(deck, players):
     deck.shuffle()
@@ -41,14 +44,14 @@ def createPlayers():
     print()
     print("Team A please enter your names!")
     print('Player 1, insert your name: ')
-    p1 = Player(input())
+    p1 = HumanPlayer(input())
     print('Player 3, insert your name: ')
-    p3 = Player(input())
+    p3 = RandomPlayer(input())
     print("Team B please enter your names!")
     print('Player 2, insert your name: ')
-    p2 = Player(input())
+    p2 = RandomPlayer(input())
     print('Player 4, insert your name: ')
-    p4 = Player(input())
+    p4 = RandomPlayer(input())
     print()
     return (p1, p2, p3, p4)
 
