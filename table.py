@@ -50,9 +50,9 @@ class Table:
         self.isTrumped = False
 
     def toString(self):
-        tablestr = ""
+        tablestr = "--- Table --- \n"
         for play in self.plays:
             tablestr = tablestr + getPlayer(play).name + " "
             tablestr = tablestr + "Card: "
             tablestr = tablestr + getCard(play).toString() + " // "
-        return tablestr
+        return tablestr + "\n"

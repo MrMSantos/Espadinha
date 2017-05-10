@@ -2,9 +2,6 @@ from player import Player
 
 class HumanPlayer(Player):
 
-    #def __init__(self, name):
-    #    super(HumanPlayer, self).__init__(name);
-
     def play(self, table):
         #Show players hand
         print(self.printHand())
@@ -30,3 +27,13 @@ class HumanPlayer(Player):
         #Update table and player
         table.layDownCard(self, self.hand[real_index])
         self.playCard(self.hand[real_index])
+
+    def bidding(self):
+        print(self.printHand())
+        print(self.name, "place your bet (0 to 13)")
+        bet = int(input())
+        while bet < 0 or bet > 13:
+            print("Please make a legit bet")
+            bet = int(input())
+        self.bet = bet
+        print()

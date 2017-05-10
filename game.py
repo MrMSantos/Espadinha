@@ -11,21 +11,15 @@ GAME_TRICKS = 13
 WINNING_SCORE = 500
 PLAYERS_NUMBER = 4
 
-def bets(players, first_player):
-    print("--- BIDDING ---")
-    for i in range(PLAYERS_NUMBER):
-        print(players[(first_player + i) % 4].printHand())
-        print(players[(first_player + i) % 4].name, "place your bet (0 to 13)");
-        bet = int(input())
-        while bet < 0 or bet > 13:
-            print("Please make a legit bet")
-            bet = int(input())
-        players[(first_player + i) % 4].bet = bet
-
-def trick(players, first_player, table):
-    for i in range(PLAYERS_NUMBER):
-        players[(first_player + i) % 4].play(table)
-        print(table.toString())
+def createPlayers():
+    print("--- Welcome to Espadinha! ---")
+    print()
+    print('Please insert your name: ')
+    p1 = HumanPlayer(input())
+    p3 = RandomPlayer("Bot 3")
+    p2 = RandomPlayer("Bot 2")
+    p4 = RandomPlayer("Bot 4")
+    return (p1, p2, p3, p4)
 
 def dealNshuffle(deck, players):
     deck.shuffle()
@@ -39,21 +33,15 @@ def dealNshuffle(deck, players):
     players[3].hand = h4
     players[3].orderHand()
 
-def createPlayers():
-    print("--- Welcome to Espadinha! ---")
-    print()
-    print("Team A please enter your names!")
-    print('Player 1, insert your name: ')
-    p1 = HumanPlayer(input())
-    print('Player 3, insert your name: ')
-    p3 = RandomPlayer(input())
-    print("Team B please enter your names!")
-    print('Player 2, insert your name: ')
-    p2 = RandomPlayer(input())
-    print('Player 4, insert your name: ')
-    p4 = RandomPlayer(input())
-    print()
-    return (p1, p2, p3, p4)
+def bets(players, first_player):
+    print("--- BIDDING ---")
+    for i in range(PLAYERS_NUMBER):
+        players[(first_player + i) % 4].bidding()
+
+def trick(players, first_player, table):
+    for i in range(PLAYERS_NUMBER):
+        players[(first_player + i) % 4].play(table)
+        print(table.toString())
 
 def firstDealer():
     return random.randint(0, 3)
@@ -63,9 +51,6 @@ def nextDealer(previous_dealer):
 
 def calculateFirstPlayer(dealer):
     return (dealer - 3) % 4
-
-def playAi():
-    1
 
 def game():
 
@@ -94,7 +79,6 @@ def game():
         dealer = nextDealer(dealer)
 
         teamA.toString()
-        print()
         teamB.toString()
 
 game()

@@ -5,7 +5,6 @@ class RandomPlayer(Player):
 
     def play(self, table):
         #Show players hand
-        print(self.printHand())
         print(self.printTricks())
         print()
         
@@ -23,3 +22,8 @@ class RandomPlayer(Player):
         #Update table and player
         table.layDownCard(self, card_to_play)
         self.playCard(card_to_play)
+
+    def bidding(self):
+        self.bet = random.randint(0, 7)
+        print(self.name, "bidding:", self.bet, "tricks")
+        print()
