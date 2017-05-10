@@ -12,8 +12,7 @@ WINNING_SCORE = 500
 PLAYERS_NUMBER = 4
 
 def createPlayers():
-    print("--- Welcome to Espadinha! ---")
-    print()
+    print("--- Welcome to Espadinha! ---\n")
     print('Please insert your name: ')
     p1 = HumanPlayer(input())
     p3 = RandomPlayer("Bot 3")

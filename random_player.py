@@ -25,5 +25,4 @@ class RandomPlayer(Player):
 
     def bidding(self):
         self.bet = random.randint(0, 7)
-        print(self.name, "bidding:", self.bet, "tricks")
-        print()
+        print(self.name, "bidding:", self.bet, "tricks\n")
