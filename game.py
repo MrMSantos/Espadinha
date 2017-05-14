@@ -23,12 +23,16 @@ def createPlayers():
 def dealNshuffle(deck, players):
     deck.shuffle()
     h1, h2, h3, h4 = deck.deal()
+    players[0].reset()
     players[0].hand = h1
     players[0].orderHand()
+    players[1].reset()
     players[1].hand = h2
     players[1].orderHand()
+    players[2].reset()
     players[2].hand = h3
     players[2].orderHand()
+    players[3].reset()
     players[3].hand = h4
     players[3].orderHand()
 
@@ -61,7 +65,7 @@ def game():
     teamB = ScoreTable((players[1], players[3]))
 
     #Game routine
-    while teamA.score < WINNING_SCORE or teamB.score < WINNING_SCORE:
+    while teamA.score < WINNING_SCORE and teamB.score < WINNING_SCORE:
         first_player = calculateFirstPlayer(dealer)
         dealNshuffle(deck, players)
         bets(players, first_player)

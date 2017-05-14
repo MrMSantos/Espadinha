@@ -17,6 +17,34 @@ class Player:
     def playCard(self, card):
         self.hand.remove(card)
 
+    def numSpades(self):
+        num = 0
+        for card in self.hand:
+            if card.suit == card.SPADES:
+                num += 1
+        return num
+
+    def numDiamonds(self):
+        num = 0
+        for card in self.hand:
+            if card.suit == card.DIAMONDS:
+                num += 1
+        return num
+
+    def numClubs(self):
+        num = 0
+        for card in self.hand:
+            if card.suit == card.CLUBS:
+                num += 1
+        return num
+
+    def numHearts(self):
+        num = 0
+        for card in self.hand:
+            if card.suit == card.HEARTS:
+                num += 1
+        return num
+
     def eligablePlay(self, isTrumped, suit = None):
         eligableCards = []
         if suit == None:
