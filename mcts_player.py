@@ -34,4 +34,5 @@ class MCTSPlayer(Player):
         trump = max(trump)
         if trump > 0:
             bet += trump
+        self.bet = bet
         print(self.name, "bidding:", self.bet, "tricks\n")

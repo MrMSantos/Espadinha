@@ -5,8 +5,7 @@ class RandomPlayer(Player):
 
     def play(self, table):
         #Show players hand
-        print(self.printTricks())
-        print()
+        print(self.printTricks() + "\n")
         
         #Show possible plays
         if len(table.plays) == 0:
@@ -24,5 +23,5 @@ class RandomPlayer(Player):
         self.playCard(card_to_play)
 
     def bidding(self):
-        self.bet = random.randint(0, 7)
+        self.bet = random.randint(1, 5)
         print(self.name, "bidding:", self.bet, "tricks\n")
