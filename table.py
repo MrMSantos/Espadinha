@@ -42,6 +42,27 @@ class Table:
         winning_player.trick += 1
         return winning_player
 
+    def highCard(self):
+
+        first_play = self.plays[0]
+        first_card = getCard(first_play)
+        first_suit = first_card.suit
+
+        winning_card = first_card
+
+        for play in self.plays[1:]:
+            played_card = getCard(play)
+            played_card_suit = played_card.suit
+
+            if (played_card_suit == winning_card.suit):
+                if (played_card.value > winning_card.value):
+                    winning_card = played_card
+
+            elif(played_card_suit == Card.SPADES):
+                winning_card = played_card
+                
+        return winning_card
+
     def resetCards(self):
         self.plays = []
 

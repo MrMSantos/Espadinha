@@ -2,10 +2,31 @@ from card import Card
 from player import Player
 import random
 
-class MCTSPlayer(Player):
+class RuleBasedPlayer(Player):
 
     def play(self, table):
 
+        print(self.printTricks())
+
+        highCard = self.playHighestCard(table)
+        lowCard = self.playHighestCard(table)
+
+        if len(table.plays) == 0:
+            if self.trick < self.bet:
+                card_to_play = highCard
+            else:
+                card_to_play = lowCard
+        else:
+            if self.trick < self.bet:
+                if table.highCard().value < highCard.value:
+                    card_to_play = highCard
+                else:
+                    card_to_play = lowCard
+            else:
+                card_to_play = lowCard
+
+        table.layDownCard(self, card_to_play)
+        self.playCard(card_to_play)
 
     def bidding(self):
         bet = 0

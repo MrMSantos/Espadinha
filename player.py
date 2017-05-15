@@ -1,5 +1,6 @@
 from card import Card
 from deck import Deck
+from table import Table
 
 class Player:
 
@@ -16,6 +17,26 @@ class Player:
 
     def playCard(self, card):
         self.hand.remove(card)
+
+    def playHighestCard(self, table):
+        playableCards = self.playableCards(table)
+        highValue = 0
+        for card in self.hand:
+            if card in playableCards:
+                if highValue < card.value:
+                    highValue = card.value
+                    highCard = card
+        return highCard
+
+    def playLowestCard(self, table):
+        playableCards = self.playableCards(table)
+        lowValue = 15
+        for card in self.hand:
+            if card in playableCards:
+                if lowValue > card.value:
+                    lowValue = card.value
+                    lowCard = card
+        return lowCard
 
     def numSpades(self):
         num = 0
@@ -65,6 +86,13 @@ class Player:
             if len(eligableCards) == 0:
                 return self.hand
             return eligableCards
+
+    def playableCards(self, table):
+        if len(table.plays) == 0:
+            playableCards = self.eligablePlay(table.isTrumped)
+        elif len(table.plays) > 0:
+            playableCards = self.eligablePlay(table.isTrumped, table.plays[0][1].suit)
+        return playableCards
 
     def printTricks(self):
         return self.name + ' ' + str(self.trick) + '/' + str(self.bet) + ' tricks'
