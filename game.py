@@ -8,80 +8,89 @@ from table import Table
 from scoretable import ScoreTable
 import random
 
-GAME_TRICKS = 13
-WINNING_SCORE = 500
-PLAYERS_NUMBER = 4
+class Game:
 
-def createPlayers():
-    print("--- Welcome to Espadinha! ---\n")
-    print('Please insert your name: ')
-    p1 = HumanPlayer(input())
-    p3 = RuleBasedPlayer("Bot 3")
-    p2 = RuleBasedPlayer("Bot 2")
-    p4 = RuleBasedPlayer("Bot 4")
-    return (p1, p2, p3, p4)
+    GAME_TRICKS = 13
+    WINNING_SCORE = 500
+    PLAYERS_NUMBER = 4
 
-def dealNshuffle(deck, players):
-    deck.shuffle()
-    h1, h2, h3, h4 = deck.deal()
-    players[0].reset()
-    players[0].hand = h1
-    players[0].orderHand()
-    players[1].reset()
-    players[1].hand = h2
-    players[1].orderHand()
-    players[2].reset()
-    players[2].hand = h3
-    players[2].orderHand()
-    players[3].reset()
-    players[3].hand = h4
-    players[3].orderHand()
+    def __init__(self):
+        self.players = []
 
-def bets(players, first_player):
-    print("--- BIDDING ---")
-    for i in range(PLAYERS_NUMBER):
-        players[(first_player + i) % 4].bidding()
+    def setup(self):
+        self.players = self.createPlayers()
+        self.deck = Deck()
+        self.table = Table()
+        self.dealer = self.firstDealer()
+        self.teamA = ScoreTable((self.players[0], self.players[2]))
+        self.teamB = ScoreTable((self.players[1], self.players[3]))
 
-def trick(players, first_player, table):
-    for i in range(PLAYERS_NUMBER):
-        players[(first_player + i) % 4].play(table)
-        print(table.toString())
+    def createPlayers(self):
+        print("--- Welcome to Espadinha! ---\n")
+        print('Please insert your name: ')
+        p1 = HumanPlayer(input())
+        p3 = RuleBasedPlayer("Bot 3")
+        p2 = RuleBasedPlayer("Bot 2")
+        p4 = RuleBasedPlayer("Bot 4")
+        return (p1, p2, p3, p4)
 
-def firstDealer():
-    return random.randint(0, 3)
+    def dealNshuffle(self):
+        self.deck.shuffle()
+        h1, h2, h3, h4 = self.deck.deal()
+        self.players[0].reset()
+        self.players[0].hand = h1
+        self.players[0].orderHand()
+        self.players[1].reset()
+        self.players[1].hand = h2
+        self.players[1].orderHand()
+        self.players[2].reset()
+        self.players[2].hand = h3
+        self.players[2].orderHand()
+        self.players[3].reset()
+        self.players[3].hand = h4
+        self.players[3].orderHand()
 
-def nextDealer(previous_dealer):
-    return (previous_dealer + 1) % 4
+    def bets(self, first_player):
+        print("--- BIDDING ---")
+        for i in range(self.PLAYERS_NUMBER):
+            self.players[(first_player + i) % 4].bidding()
 
-def calculateFirstPlayer(dealer):
-    return (dealer - 3) % 4
+    def trick(self, first_player):
+        for i in range(self.PLAYERS_NUMBER):
+            self.players[(first_player + i) % 4].play(self.table)
+            print(self.table.toString())
 
-def game():
-    players = createPlayers()
-    deck = Deck()
-    table = Table()
-    dealer = firstDealer()
-    teamA = ScoreTable((players[0], players[2]))
-    teamB = ScoreTable((players[1], players[3]))
+    def firstDealer(self):
+        return random.randint(0, 3)
 
-    #Game routine
-    while teamA.score < WINNING_SCORE and teamB.score < WINNING_SCORE:
-        first_player = calculateFirstPlayer(dealer)
-        dealNshuffle(deck, players)
-        bets(players, first_player)
-        for i in range(GAME_TRICKS):
-            trick(players, first_player, table)
+    def nextDealer(self, previous_dealer):
+        return (previous_dealer + 1) % 4
 
-            player_win = table.checkWinner()
-            first_player = players.index(player_win)
-            table.resetCards()
-        table.reset()
+    def calculateFirstPlayer(self, dealer):
+        return (self.dealer - 3) % 4
 
-        teamA.updateScoreTable()
-        teamB.updateScoreTable()
-        dealer = nextDealer(dealer)
+    def game(self):
 
-        teamA.toString()
-        teamB.toString()
+        self.setup()
+        #Game routine
+        while self.teamA.score < self.WINNING_SCORE and self.teamB.score < self.WINNING_SCORE:
+            first_player = self.calculateFirstPlayer(self.dealer)
+            self.dealNshuffle()
+            self.bets(first_player)
+            for i in range(self.GAME_TRICKS):
+                self.trick(first_player)
 
-game()
+                player_win = self.table.checkWinner()
+                first_player = self.players.index(player_win)
+                self.table.resetCards()
+            self.table.reset()
+
+            self.teamA.updateScoreTable()
+            self.teamB.updateScoreTable()
+            self.dealer = self.nextDealer(self.dealer)
+
+            self.teamA.toString()
+            self.teamB.toString()
+
+game = Game()
+game.game()
