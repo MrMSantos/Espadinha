@@ -15,20 +15,18 @@ class Game:
     PLAYERS_NUMBER = 4
 
     def __init__(self):
-        self.players = []
-
-    def setup(self):
-        self.players = self.createPlayers()
+        self.players = Game.createPlayers(self)
         self.deck = Deck()
         self.table = Table()
-        self.dealer = self.firstDealer()
+        self.dealer = Game.firstDealer(self)
         self.teamA = ScoreTable((self.players[0], self.players[2]))
         self.teamB = ScoreTable((self.players[1], self.players[3]))
 
     def createPlayers(self):
         print("--- Welcome to Espadinha! ---\n")
         print('Please insert your name: ')
-        p1 = HumanPlayer(input())
+        #p1 = HumanPlayer(input())
+        p1 = RuleBasedPlayer("Bot 3")
         p3 = RuleBasedPlayer("Bot 3")
         p2 = RuleBasedPlayer("Bot 2")
         p4 = RuleBasedPlayer("Bot 4")
@@ -71,9 +69,10 @@ class Game:
 
     def game(self):
 
-        self.setup()
         #Game routine
+        num = 0
         while self.teamA.score < self.WINNING_SCORE and self.teamB.score < self.WINNING_SCORE:
+
             first_player = self.calculateFirstPlayer(self.dealer)
             self.dealNshuffle()
             self.bets(first_player)
@@ -91,6 +90,8 @@ class Game:
 
             self.teamA.toString()
             self.teamB.toString()
+            num = num + 1
+        print("Number of games - ", num)
 
 game = Game()
 game.game()
