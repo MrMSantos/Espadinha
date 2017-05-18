@@ -9,7 +9,7 @@ class RuleBasedPlayer(Player):
         print(self.printTricks())
 
         highCard = self.playHighestCard(table)
-        lowCard = self.playHighestCard(table)
+        lowCard = self.playLowestCard(table)
 
         if len(table.plays) == 0:
             if self.trick < self.bet:
@@ -19,7 +19,10 @@ class RuleBasedPlayer(Player):
         else:
             if self.trick < self.bet:
                 if table.highCard().value < highCard.value:
-                    card_to_play = highCard
+                    if all(highCard.value > oldCard.value and highCard.suit == oldCard.suit for oldCard in table.cardsUsed):
+                        card_to_play = highCard
+                    else:
+                        card_to_play = lowCard
                 else:
                     card_to_play = lowCard
             else:
@@ -36,7 +39,7 @@ class RuleBasedPlayer(Player):
         diamonds = self.numDiamonds()
         clubs = self.numClubs()
         hearts = self.numHearts()
-        for card in self.hand:  
+        for card in self.hand:
             if card.value == Card.values['A']:
                 bet += 1
                 if card.suit == Card.SPADES:

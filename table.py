@@ -6,15 +6,17 @@ def getPlayer(play):
 
 def getCard(play):
     return play[1]
-    
+
 class Table:
 
     def __init__(self):
         self.plays = []
         self.isTrumped = False
+        self.cardsUsed = []
 
     def layDownCard(self, player, card):
         self.plays += [(player, card)]
+        self.cardsUsed.append(card)
 
     def checkWinner(self):
 
@@ -60,7 +62,7 @@ class Table:
 
             elif(played_card_suit == Card.SPADES):
                 winning_card = played_card
-                
+
         return winning_card
 
     def resetCards(self):
@@ -69,6 +71,7 @@ class Table:
     def reset(self):
         self.plays = []
         self.isTrumped = False
+        self.cardsUsed = []
 
     def toString(self):
         tablestr = "--- Table --- \n"
