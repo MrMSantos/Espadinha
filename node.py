@@ -13,7 +13,7 @@ class Node:
     self.visits = 0
     self.wins = 0
     self.parentVisits = 0
-    self.isNotTerminal = true
+    self.isNotTerminal = True
 
     def __init__(self, table, action, parent, scoreTables, player):
         #initializes with gameState
