@@ -6,6 +6,7 @@ from random_player import RandomPlayer
 from rulebased_player import RuleBasedPlayer
 from table import Table
 from scoretable import ScoreTable
+from copy import deepcopy
 import random
 
 class Game:
@@ -78,7 +79,6 @@ class Game:
             self.bets(first_player)
             for i in range(self.GAME_TRICKS):
                 self.trick(first_player)
-
                 player_win = self.table.checkWinner()
                 first_player = self.players.index(player_win)
                 self.table.resetCards()
@@ -92,6 +92,7 @@ class Game:
             self.teamB.toString()
             num = num + 1
         print("Number of games - ", num)
+
 
 game = Game()
 game.game()
