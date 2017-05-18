@@ -1,18 +1,26 @@
 from copy import deepcopy
 import numpy as np
 
+SIMULATION_THRESHOLD = 15
+
 class MCTS:
 
     self.root = None
 
-    def __init__(self, root):
+    def __init__(self, root, max_depth):
         self.root = root
+        self.depth = 0
+        self.max_depth
 
     def search(self):
-        while in range(computational_range):
+        while (self.depth < self.max_depth):
+
             next_node = selection(self.root)
-            reward = playout(next_node)
-            backpropagation(next_node, reward)
+
+            for i in range(SIMULATION_THRESHOLD):
+                reward = playout(next_node)
+                backpropagation(next_node, reward)
+
         return bestChild(self.root).action
 
     def selection(self, node):
@@ -28,10 +36,7 @@ class MCTS:
         return node.expand()
 
     def playout(self, node):
-        while node.game.notFinished:
-            #random_action = random.choice(node.playableCards)
-            #nextState = deepcopy(node.game)
-            #nextState = nextState.play
+        return node.playout()
 
     def backpropagation(self, node, reward):
         child_utility  = node.utility

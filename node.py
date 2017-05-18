@@ -1,13 +1,13 @@
 from math import log, sqrt
 from __future__ import division
 
+
 class Node:
-    self.table = None
+    self.game = None
     self.action = None
     self.parent = None
     self.playableCards = None
     self.children = []
-    self.scoreTables = None
     self.currentPlayer = None
     self.utility = 0
     self.visits = 0
@@ -15,29 +15,24 @@ class Node:
     self.parentVisits = 0
     self.isNotTerminal = True
 
-    def __init__(self, table, action, parent, scoreTables, player):
-        #initializes with gameState
+    def __init__(self, game, action, parent,  player):
         self.currentPlayer = player
-        self.table = table
+        self.game = game
         self.action = action
         self.parent = parent
-        self.scoreTables = scoreTables
         self.playableCards = self.currentPlayer.playableCards()
 
 
 
     def expand(self):
-        #AdvancesGameState
+        chosen_card = random.choice(playableCards)
+        playableCards.remove(chosen_card)
+        self.current_player.playCard(chosen_card)#on the copy
+        next_state = game.nextState(chosen_card, self.current_player)#on copy
+        next_node = Node(next_state, game, action, self, self.current_player)
+        self.children += [next_node]
+        return next_node
 
-        #choose most likely good action
-        chosen_action =
-        #produce next node with next state
-        next_table =
-        next_player =
-        next_parent =
-        next_scoreTables = self.scoreTables
-        next_node = Node()
-        #action of new node = action that created it
 
 
     def bestChild(self):
@@ -49,10 +44,12 @@ class Node:
         return bestChild
 
     def playout(self):
-        #simmulate
-        #in the end if you "meet the objective" increment wins
-        pass
-
+        while self.game.notFinished:
+            #get beliefs
+            #based on belief randomly distribute cards to other players
+            #make them chose one of the possible cards at random
+        #calculate utility for the finished state (win or lose and card played are parameters)
+f
     def UCTValue(self):
         C = 1.4
         return (self.utility / self.visits) + (C * sqrt(log(self.parentVisits) / self.visits)

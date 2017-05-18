@@ -3,9 +3,15 @@ from player import Player
 import random
 
 class MCTSPlayer(Player):
+    self.gameState = None
+    self.beliefs = {}
 
-    def play(self, table):
+    def play(self, game):
+        pass
 
+    def __init__(self, game):
+        for player in game.players:
+            self.beliefs[player] = Belief(game, player)
 
     def bidding(self):
         bet = 0
@@ -15,7 +21,7 @@ class MCTSPlayer(Player):
         diamonds = self.numDiamonds()
         clubs = self.numClubs()
         hearts = self.numHearts()
-        for card in self.hand:  
+        for card in self.hand:
             if card.value == Card.values['A']:
                 bet += 1
                 if card.suit == Card.SPADES:
