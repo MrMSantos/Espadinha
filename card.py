@@ -28,3 +28,6 @@ class Card:
 		print("|    %s|" % self.rep)
 		print("|-----|")
 		return self.rep + ' ' + self.suit'''
+
+	def equal(self, card):
+		return self.value == card.value and self.suit == card.suit

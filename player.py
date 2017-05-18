@@ -121,3 +121,6 @@ class Player:
                     hand[i], hand[i + 1] = hand[i + 1], hand[i]
                     switch = True
         self.hand = hand
+
+        def equal(self, player):
+            return self.name == player.name

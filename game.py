@@ -8,6 +8,7 @@ from table import Table
 from scoretable import ScoreTable
 from copy import deepcopy
 import random
+import time
 
 class Game:
 
@@ -27,10 +28,10 @@ class Game:
         print("--- Welcome to Espadinha! ---\n")
         print('Please insert your name: ')
         #p1 = HumanPlayer(input())
-        p1 = RuleBasedPlayer("Bot 3")
+        p1 = RuleBasedPlayer("Bot 1")
         p3 = RuleBasedPlayer("Bot 3")
-        p2 = RuleBasedPlayer("Bot 2")
-        p4 = RuleBasedPlayer("Bot 4")
+        p2 = RandomPlayer("Bot 2")
+        p4 = RandomPlayer("Bot 4")
         return (p1, p2, p3, p4)
 
     def dealNshuffle(self):
@@ -73,7 +74,7 @@ class Game:
         #Game routine
         num = 0
         while self.teamA.score < self.WINNING_SCORE and self.teamB.score < self.WINNING_SCORE:
-
+            print("Number of games - ", num)
             first_player = self.calculateFirstPlayer(self.dealer)
             self.dealNshuffle()
             self.bets(first_player)
@@ -94,5 +95,5 @@ class Game:
         print("Number of games - ", num)
 
 
-game = Game()
-game.game()
+#game = Game()
+#game.game()

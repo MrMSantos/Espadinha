@@ -6,7 +6,7 @@ class RandomPlayer(Player):
     def play(self, table):
         #Show players hand
         print(self.printTricks() + "\n")
-        
+
         #Show possible plays
         if len(table.plays) == 0:
             playableCards = self.eligablePlay(table.isTrumped)
