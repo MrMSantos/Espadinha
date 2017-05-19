@@ -78,7 +78,7 @@ class MCTSPlayer(Player):
                 minCard = card
                 minValue = self.belief[card]
         return minCard
-        
+
 
     def bidding(self):
         bet = 0
