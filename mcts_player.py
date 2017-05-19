@@ -39,7 +39,7 @@ class MCTSPlayer(Player):
 
         for card in eligibleCards:
             if card.suit == Card.SPADES:
-                self.belief[card] *= 14 - card.value
+                self.belief[card] *= 15 - card.value
 
 
     def updateSuits(self, table):
@@ -64,14 +64,20 @@ class MCTSPlayer(Player):
         self.updateSuits(table)
         self.updateBelief(table, playableCards)
         self.printBelief()
-        if self.trick < self.bet:
-            card_to_play = max(self.belief.items(), key=operator.itemgetter(1))[0]
-        else:
-            card_to_play = min(self.belief.items(), key=operator.itemgetter(1))[0]
+
+        card_to_play = max(self.belief.items(), key=operator.itemgetter(1))[0]
 
         del self.belief[card_to_play]
         table.layDownCard(self, card_to_play)
         self.playCard(card_to_play)
+
+    def minBelief(self):
+        minValue = 10000
+        for card in self.belief:
+            if self.belief[card] < minValue and self.belief[card] != 0:
+                minCard = card
+                minValue = self.belief[card]
+        return minCard
         
 
     def bidding(self):
