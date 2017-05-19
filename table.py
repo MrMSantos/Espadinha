@@ -16,7 +16,6 @@ class Table:
 
     def layDownCard(self, player, card):
         self.plays += [(player, card)]
-        self.cardsUsed.append(card)
 
     def checkWinner(self):
 
@@ -41,6 +40,9 @@ class Table:
                 winning_card = played_card
                 winning_player = getPlayer(play)
 
+        for play in self.plays:
+            self.cardsUsed.append(getCard(play))
+            
         winning_player.trick += 1
         return winning_player
 

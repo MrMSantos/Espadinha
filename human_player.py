@@ -8,10 +8,7 @@ class HumanPlayer(Player):
         print(self.printTricks())
 
         #Show possible plays
-        if len(table.plays) == 0:
-            playableCards = self.eligablePlay(table.isTrumped)
-        elif len(table.plays) > 0:
-            playableCards = self.eligablePlay(table.isTrumped, table.plays[0][1].suit)
+        playableCards = self.playableCards(table)
 
         #Select a playable card
         c_index = int(input())

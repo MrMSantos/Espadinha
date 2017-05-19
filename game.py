@@ -4,6 +4,7 @@ from player import Player
 from human_player import HumanPlayer
 from random_player import RandomPlayer
 from rulebased_player import RuleBasedPlayer
+from mcts_player import MCTSPlayer
 from table import Table
 from scoretable import ScoreTable
 from copy import deepcopy
@@ -26,12 +27,12 @@ class Game:
 
     def createPlayers(self):
         print("--- Welcome to Espadinha! ---\n")
-        print('Please insert your name: ')
+        #print('Please insert your name: ')
         #p1 = HumanPlayer(input())
-        p1 = RuleBasedPlayer("Bot 1")
-        p3 = RuleBasedPlayer("Bot 3")
-        p2 = RandomPlayer("Bot 2")
-        p4 = RandomPlayer("Bot 4")
+        p1 = MCTSPlayer("Bot 1")
+        p3 = MCTSPlayer("Bot 3")
+        p2 = RuleBasedPlayer("Bot 2")
+        p4 = RuleBasedPlayer("Bot 4")
         return (p1, p2, p3, p4)
 
     def dealNshuffle(self):
@@ -59,6 +60,7 @@ class Game:
         for i in range(self.PLAYERS_NUMBER):
             self.players[(first_player + i) % 4].play(self.table)
             print(self.table.toString())
+        #input()
 
     def firstDealer(self):
         return random.randint(0, 3)
@@ -95,5 +97,5 @@ class Game:
         print("Number of games - ", num)
 
 
-#game = Game()
-#game.game()
+game = Game()
+game.game()

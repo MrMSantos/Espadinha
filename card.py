@@ -31,3 +31,14 @@ class Card:
 
 	def equal(self, card):
 		return self.value == card.value and self.suit == card.suit
+
+	def isHighest(self, cardsList):
+		highCards = []
+		highValue = 14
+		for card in cardsList:
+			if card.value > self.value and card.suit == self.suit:
+				highCards.append(card)
+		if highValue - self.value == len(highCards):
+			return True
+		else:
+			return False
