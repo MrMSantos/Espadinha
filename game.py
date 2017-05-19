@@ -29,10 +29,10 @@ class Game:
         print("--- Welcome to Espadinha! ---\n")
         #print('Please insert your name: ')
         #p1 = HumanPlayer(input())
-        p1 = MCTSPlayer("Bot 1")
-        p3 = MCTSPlayer("Bot 3")
-        p2 = MCTSPlayer("Bot 2")
-        p4 = MCTSPlayer("Bot 4")
+        p1 = RuleBasedPlayer("Bot 1")
+        p3 = RuleBasedPlayer("Bot 3")
+        p2 = RuleBasedPlayer("Bot 2")
+        p4 = RuleBasedPlayer("Bot 4")
         return (p1, p2, p3, p4)
 
     def dealNshuffle(self):
@@ -60,7 +60,7 @@ class Game:
         for i in range(self.PLAYERS_NUMBER):
             self.players[(first_player + i) % 4].play(self.table)
             print(self.table.toString())
-            input()
+            #input()
 
     def firstDealer(self):
         return random.randint(0, 3)
@@ -72,29 +72,39 @@ class Game:
         return (self.dealer - 3) % 4
 
     def game(self):
+        media = 0
+        games = 10
+        f = open('outfile', 'w')
+        while games > 0:
+            #Game routine
+            num = 0
+            while self.teamA.score < self.WINNING_SCORE and self.teamB.score < self.WINNING_SCORE:
+                print("Number of games - ", num)
+                first_player = self.calculateFirstPlayer(self.dealer)
+                self.dealNshuffle()
+                self.bets(first_player)
+                for i in range(self.GAME_TRICKS):
+                    self.trick(first_player)
+                    player_win = self.table.checkWinner()
+                    first_player = self.players.index(player_win)
+                    self.table.resetCards()
+                self.table.reset()
 
-        #Game routine
-        num = 0
-        while self.teamA.score < self.WINNING_SCORE and self.teamB.score < self.WINNING_SCORE:
+                self.teamA.updateScoreTable()
+                self.teamB.updateScoreTable()
+                self.dealer = self.nextDealer(self.dealer)
+
+                self.teamA.toString()
+                self.teamB.toString()
+                num = num + 1
             print("Number of games - ", num)
-            first_player = self.calculateFirstPlayer(self.dealer)
-            self.dealNshuffle()
-            self.bets(first_player)
-            for i in range(self.GAME_TRICKS):
-                self.trick(first_player)
-                player_win = self.table.checkWinner()
-                first_player = self.players.index(player_win)
-                self.table.resetCards()
-            self.table.reset()
-
-            self.teamA.updateScoreTable()
-            self.teamB.updateScoreTable()
-            self.dealer = self.nextDealer(self.dealer)
-
-            self.teamA.toString()
-            self.teamB.toString()
-            num = num + 1
-        print("Number of games - ", num)
+            media += num
+            f.write(str(num) + '\n')
+            self.teamA.reset()
+            self.teamB.reset()
+            games -= 1
+        media = media / 10
+        f.write("Media de jogos - " + str(media) + '\n')
 
 
 game = Game()

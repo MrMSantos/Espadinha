@@ -45,3 +45,9 @@ class ScoreTable:
         print("Bags:", self.bags)
         print("Score:", self.score)
         print("--------------------")
+
+    def reset(self):
+        self.totalBid = 0
+        self.totalTricks = 0
+        self.bags = 0
+        self.score = 0
