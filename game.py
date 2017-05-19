@@ -31,8 +31,8 @@ class Game:
         #p1 = HumanPlayer(input())
         p1 = MCTSPlayer("Bot 1")
         p3 = MCTSPlayer("Bot 3")
-        p2 = RuleBasedPlayer("Bot 2")
-        p4 = RuleBasedPlayer("Bot 4")
+        p2 = MCTSPlayer("Bot 2")
+        p4 = MCTSPlayer("Bot 4")
         return (p1, p2, p3, p4)
 
     def dealNshuffle(self):
@@ -60,7 +60,7 @@ class Game:
         for i in range(self.PLAYERS_NUMBER):
             self.players[(first_player + i) % 4].play(self.table)
             print(self.table.toString())
-        #input()
+            input()
 
     def firstDealer(self):
         return random.randint(0, 3)

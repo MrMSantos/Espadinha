@@ -37,7 +37,7 @@ class MCTSPlayer(Player):
                 else:
                     self.belief[card] = (1 / card.value) * 2
 
-        for card in self.belief:
+        for card in eligibleCards:
             if card.suit == Card.SPADES:
                 self.belief[card] *= 14 - card.value
 
@@ -64,7 +64,10 @@ class MCTSPlayer(Player):
         self.updateSuits(table)
         self.updateBelief(table, playableCards)
         self.printBelief()
-        card_to_play = max(self.belief.items(), key=operator.itemgetter(1))[0]
+        if self.trick < self.bet:
+            card_to_play = max(self.belief.items(), key=operator.itemgetter(1))[0]
+        else:
+            card_to_play = min(self.belief.items(), key=operator.itemgetter(1))[0]
 
         del self.belief[card_to_play]
         table.layDownCard(self, card_to_play)
